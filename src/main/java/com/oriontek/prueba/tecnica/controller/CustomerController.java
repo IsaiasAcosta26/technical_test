@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
@@ -17,25 +18,32 @@ public class CustomerController {
 
     private final CustomerProcessor processor;
 
-    @PostMapping
-    public ResponseEntity<CustomerDTO> create(@Valid @RequestBody CustomerDTO customer) {
-        CustomerDTO created = processor.create(customer);
-        return ResponseEntity.created(URI.create("/api/customers/" + created.getId())).body(created);
+    @PostMapping("/create")
+    public ResponseEntity<CustomerDTO> create(@Valid @RequestBody CustomerDTO customerDTO) {
+        CustomerDTO created = processor.create(customerDTO);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(created.getId())
+                .toUri();
+        return ResponseEntity.created(location).body(created);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<CustomerDTO> getById(@PathVariable Long id) {
-        return ResponseEntity.ok(processor.getById(id));
+        CustomerDTO dto = processor.getById(id);
+        return ResponseEntity.ok(dto);
     }
 
-    @GetMapping
+    @GetMapping("/list")
     public ResponseEntity<List<CustomerDTO>> getAll() {
-        return ResponseEntity.ok(processor.getAll());
+        List<CustomerDTO> list = processor.getAll();
+        return ResponseEntity.ok(list);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CustomerDTO> update(@PathVariable Long id, @Valid @RequestBody CustomerDTO customer) {
-        return ResponseEntity.ok(processor.update(id, customer));
+    public ResponseEntity<CustomerDTO> update(@PathVariable Long id, @Valid @RequestBody CustomerDTO customerDTO) {
+        CustomerDTO updated = processor.update(id, customerDTO);
+        return ResponseEntity.ok(updated);
     }
 
     @DeleteMapping("/{id}")

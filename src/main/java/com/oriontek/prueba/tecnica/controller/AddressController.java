@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
@@ -18,24 +19,32 @@ public class AddressController {
     private final AddressProcessor processor;
 
     @PostMapping("/customer/{customerId}")
-    public ResponseEntity<AddressDTO> create(@PathVariable Long customerId, @Valid @RequestBody AddressDTO address) {
-        AddressDTO created = processor.createForCustomer(customerId, address);
-        return ResponseEntity.created(URI.create("/api/addresses/" + created.getId())).body(created);
+    public ResponseEntity<AddressDTO> create(@PathVariable Long customerId, @Valid @RequestBody AddressDTO addressDTO) {
+        addressDTO.setCustomerId(customerId);
+        AddressDTO created = processor.createForCustomer(customerId, addressDTO);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(created.getId())
+                .toUri();
+        return ResponseEntity.created(location).body(created);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<AddressDTO> getById(@PathVariable Long id) {
-        return ResponseEntity.ok(processor.getById(id));
+        AddressDTO dto = processor.getById(id);
+        return ResponseEntity.ok(dto);
     }
 
     @GetMapping
     public ResponseEntity<List<AddressDTO>> getAll() {
-        return ResponseEntity.ok(processor.getAll());
+        List<AddressDTO> list = processor.getAll();
+        return ResponseEntity.ok(list);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AddressDTO> update(@PathVariable Long id, @Valid @RequestBody AddressDTO address) {
-        return ResponseEntity.ok(processor.update(id, address));
+    public ResponseEntity<AddressDTO> update(@PathVariable Long id, @Valid @RequestBody AddressDTO addressDTO) {
+        AddressDTO updated = processor.update(id, addressDTO);
+        return ResponseEntity.ok(updated);
     }
 
     @DeleteMapping("/{id}")

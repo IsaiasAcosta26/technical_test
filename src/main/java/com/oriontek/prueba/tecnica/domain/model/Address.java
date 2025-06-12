@@ -19,6 +19,7 @@ public class Address {
     private String street;
     private String city;
     private String country;
+    private String zipCode;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
