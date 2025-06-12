@@ -1,4 +1,4 @@
-package com.oriontek.prueba.tecnica.Repository;
+package com.oriontek.prueba.tecnica.application.Repository;
 
 import com.oriontek.prueba.tecnica.domain.model.Address;
 import org.springframework.data.jpa.repository.JpaRepository;
