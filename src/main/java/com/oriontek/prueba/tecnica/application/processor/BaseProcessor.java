@@ -39,7 +39,6 @@ public abstract class BaseProcessor<T, D> {
                         throw new RuntimeException("No encontrado con ID: " + id);
                 }
                 T entity = mapper.toEntity(dto);
-                // Opcional: puedes copiar solo algunos campos en vez de reemplazar todo
                 return mapper.toDto(repository.save(entity));
         }
 
