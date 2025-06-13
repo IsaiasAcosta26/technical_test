@@ -3,7 +3,7 @@ package com.oriontek.prueba.tecnica.application.service;
 import com.oriontek.prueba.tecnica.application.dto.CustomerDTO;
 import java.util.List;
 
-public interface CustomerService {
+public interface ICustomerService {
 
     CustomerDTO create(CustomerDTO customerDTO);
 

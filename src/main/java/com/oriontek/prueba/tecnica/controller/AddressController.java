@@ -11,17 +11,22 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
+import static com.oriontek.prueba.tecnica.config.ApiConstants.API_VERSION;
+
 @RestController
-@RequestMapping("/api/addresses")
+@RequestMapping(API_VERSION + "/addresses")
 @RequiredArgsConstructor
 public class AddressController {
 
     private final AddressProcessor processor;
 
     @PostMapping("/customer/{customerId}")
-    public ResponseEntity<AddressDTO> create(@PathVariable Long customerId, @Valid @RequestBody AddressDTO addressDTO) {
+    public ResponseEntity<AddressDTO> create(
+            @PathVariable Long customerId,
+            @Valid @RequestBody AddressDTO addressDTO
+    ) {
         addressDTO.setCustomerId(customerId);
-        AddressDTO created = processor.createForCustomer(customerId, addressDTO);
+        AddressDTO created = processor.create(addressDTO);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(created.getId())

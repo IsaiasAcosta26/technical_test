@@ -11,8 +11,10 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
+import static com.oriontek.prueba.tecnica.config.ApiConstants.API_VERSION;
+
 @RestController
-@RequestMapping("/api/customers")
+@RequestMapping(API_VERSION + "/customers")
 @RequiredArgsConstructor
 public class CustomerController {
 

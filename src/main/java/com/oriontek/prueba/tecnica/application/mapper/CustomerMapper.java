@@ -5,8 +5,5 @@ import com.oriontek.prueba.tecnica.domain.model.Customer;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring", uses = AddressMapper.class)
-public interface CustomerMapper {
-    Customer toEntity(CustomerDTO customerDto);
-    CustomerDTO toDto(Customer customer);
-
+public interface CustomerMapper extends BaseMapper<Customer, CustomerDTO> {
 }

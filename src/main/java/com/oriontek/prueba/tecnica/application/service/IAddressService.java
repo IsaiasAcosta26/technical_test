@@ -3,7 +3,7 @@ package com.oriontek.prueba.tecnica.application.service;
 import com.oriontek.prueba.tecnica.application.dto.AddressDTO;
 import java.util.List;
 
-public interface AddressService {
+public interface IAddressService {
 
     AddressDTO create(Long customerId, AddressDTO addressDTO);
 
