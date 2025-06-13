@@ -44,7 +44,7 @@ Este proyecto es una API REST desarrollada con Spring Boot que permite gestionar
 ### 1. Clona el repositorio
 
 
-git clone https://github.com/tu-usuario/tu-repositorio.git
+git clone https://github.com/IsaiasAcosta26/technical_test.git
 cd tu-repositorio
 
 2. Configura el application.properties
